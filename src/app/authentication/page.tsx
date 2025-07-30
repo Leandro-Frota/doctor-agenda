@@ -12,10 +12,10 @@ const AuthenticationPage = () => {
           <TabsTrigger value="register">Criar conta</TabsTrigger>
         </TabsList>
         <TabsContent value="login">
-        <LoginForm />
+          <LoginForm />
         </TabsContent>
         <TabsContent value="register">
-            <SignUpForm/>
+          <SignUpForm />
         </TabsContent>
       </Tabs>
     </div>
