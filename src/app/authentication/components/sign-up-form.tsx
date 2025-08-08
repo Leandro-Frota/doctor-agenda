@@ -23,6 +23,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
 
 
@@ -50,8 +51,8 @@ const SignUpForm = () => {
       password: "",
     },
   });
-  function onSubmit(values: z.infer<typeof registerSchema>) {
-    authClient.signUp.email({
+ async function onSubmit(values: z.infer<typeof registerSchema>) {
+   await  authClient.signUp.email({
       email: values.email,
       password: values.password,
       name: values.name,
@@ -60,8 +61,16 @@ const SignUpForm = () => {
   {
     onSuccess : () => {
       router.push("/dashboard");
-    }
-  });
+    },
+  onError: (ctx) => {
+          if (ctx.error.code === "USER_ALREADY_EXISTS") {
+            toast.error("E-mail já cadastrado.");
+            return;
+          }
+          toast.error("Erro ao criar conta.");
+      },
+    },
+);
   }
 
   return (
