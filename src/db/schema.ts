@@ -68,7 +68,6 @@ export const verificationsTable = pgTable("verifications", {
 export const clinicsTable = pgTable("clinics", {
   id: uuid("id").defaultRandom().primaryKey(),
   name: text("name").notNull(),
-  address: text("address").notNull(),
   createdAt: timestamp("created_at").defaultNow(),
   updateAt: timestamp("updated_at")
     .defaultNow()
@@ -80,10 +79,10 @@ export const clinicsTable = pgTable("clinics", {
 export const usersToClinicTable = pgTable("users_to_clinic", {
   userId: text("user_id")
     .notNull()
-    .references(() => usersTable.id),
+    .references(() => usersTable.id, { onDelete: "cascade" }),
   clinicId: uuid("clinic_id")
     .notNull()
-    .references(() => clinicsTable.id),
+    .references(() => clinicsTable.id, { onDelete: "cascade" }),
   cratetAt: timestamp("created_at").defaultNow(),
   updateAt: timestamp("updated_at")
     .defaultNow()
